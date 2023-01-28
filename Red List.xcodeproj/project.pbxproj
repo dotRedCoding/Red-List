@@ -14,6 +14,7 @@
 		7F49CA1E29846E59001EADA4 /* Red_List.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F49CA1C29846E59001EADA4 /* Red_List.xcdatamodeld */; };
 		7F49CA2029846E5A001EADA4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F49CA1F29846E5A001EADA4 /* Assets.xcassets */; };
 		7F49CA2329846E5A001EADA4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F49CA2129846E5A001EADA4 /* LaunchScreen.storyboard */; };
+		7F49CA2C29858E2C001EADA4 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F49CA2B29858E2C001EADA4 /* Item.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		7F49CA1F29846E5A001EADA4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7F49CA2229846E5A001EADA4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7F49CA2429846E5A001EADA4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7F49CA2B29858E2C001EADA4 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,14 +62,39 @@
 			children = (
 				7F49CA1329846E59001EADA4 /* AppDelegate.swift */,
 				7F49CA1529846E59001EADA4 /* SceneDelegate.swift */,
-				7F49CA1729846E59001EADA4 /* ListViewController.swift */,
-				7F49CA1929846E59001EADA4 /* Main.storyboard */,
+				7F49CA2A29858E15001EADA4 /* Model */,
+				7F49CA2E29858E46001EADA4 /* View */,
+				7F49CA2D29858E39001EADA4 /* Controller */,
 				7F49CA1F29846E5A001EADA4 /* Assets.xcassets */,
 				7F49CA2129846E5A001EADA4 /* LaunchScreen.storyboard */,
 				7F49CA2429846E5A001EADA4 /* Info.plist */,
 				7F49CA1C29846E59001EADA4 /* Red_List.xcdatamodeld */,
 			);
 			path = "Red List";
+			sourceTree = "<group>";
+		};
+		7F49CA2A29858E15001EADA4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7F49CA2B29858E2C001EADA4 /* Item.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7F49CA2D29858E39001EADA4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7F49CA1729846E59001EADA4 /* ListViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		7F49CA2E29858E46001EADA4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7F49CA1929846E59001EADA4 /* Main.storyboard */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,6 +171,7 @@
 				7F49CA1829846E59001EADA4 /* ListViewController.swift in Sources */,
 				7F49CA1429846E59001EADA4 /* AppDelegate.swift in Sources */,
 				7F49CA1629846E59001EADA4 /* SceneDelegate.swift in Sources */,
+				7F49CA2C29858E2C001EADA4 /* Item.swift in Sources */,
 				7F49CA1E29846E59001EADA4 /* Red_List.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
