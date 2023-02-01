@@ -76,7 +76,7 @@ class ListViewController: UITableViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    // save Item function
+    //MARK: - saveItems function
     
     func saveItems() {
         // update the data
@@ -90,12 +90,10 @@ class ListViewController: UITableViewController {
         self.tableView.reloadData()
         
     }
+    //MARK: - loadItems function
     
-    func loadItems() {
+    func loadItems(with request : NSFetchRequest<Item> = Item.fetchRequest()) {
         // read the data
-        
-        let request: NSFetchRequest<Item> = Item.fetchRequest()
-        
         do {
             itemArray = try context.fetch(request)
         } catch {
@@ -104,8 +102,22 @@ class ListViewController: UITableViewController {
         
     }
     
+    
 }
+//MARK: - UISearchBarDelegate Extension
 
+extension ListViewController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let request : NSFetchRequest<Item> = Item.fetchRequest()
+        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        
+        //sort data
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        loadItems(with: request)
+        
+    }
 
+}
 
 
