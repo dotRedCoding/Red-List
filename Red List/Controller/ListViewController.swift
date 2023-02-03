@@ -10,17 +10,23 @@ import CoreData
 
 class ListViewController: UITableViewController {
     
+    @IBOutlet weak var listSearchBar: UISearchBar!
+    
     var itemArray = [Item]()
-    let defaults = UserDefaults.standard
+    var selectedCategory : Category? {
+        didSet {
+            loadItems()
+        }
+    }
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+        //print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         
-        loadItems()
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -45,10 +51,10 @@ class ListViewController: UITableViewController {
         //itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
         saveItems()
-        tableView.deselectRow(at: indexPath, animated: true)
+        //tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    // Add new item
+    //MARK: - Add New Items to Table
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
@@ -63,6 +69,7 @@ class ListViewController: UITableViewController {
             let newItem = Item(context: self.context)
             newItem.title = typedText.text!
             newItem.done = false
+            newItem.category = self.selectedCategory
             self.itemArray.append(newItem)
             
             self.saveItems()
@@ -92,32 +99,52 @@ class ListViewController: UITableViewController {
     }
     //MARK: - loadItems function
     
-    func loadItems(with request : NSFetchRequest<Item> = Item.fetchRequest()) {
+    func loadItems(with request : NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
+        
+        let categoryPredicate = NSPredicate(format: "category.name MATCHES %@", selectedCategory!.name!)
+        
+        if let additionalPredicate = predicate {
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
+        } else {
+            request.predicate = categoryPredicate
+        }
+        
+        
         // read the data
         do {
             itemArray = try context.fetch(request)
         } catch {
             print("Error fetching data from context \(error)")
         }
-        
+        tableView.reloadData()
     }
-    
-    
 }
+
 //MARK: - UISearchBarDelegate Extension
 
 extension ListViewController: UISearchBarDelegate {
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        let request : NSFetchRequest<Item> = Item.fetchRequest()
-        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
-        
-        //sort data
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-        loadItems(with: request)
+        loadItems(with: request, predicate: predicate)
         
     }
-
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadItems()
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        }
+    }
 }
+    
+
+    
+    
+
+
 
 
